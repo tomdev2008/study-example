@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.zcgewu</groupId>
+		<artifactId>study-example-soa</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+	</parent>
+	<groupId>org.zcgewu</groupId>
+	<artifactId>study-example-soa-service</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<name>study-example-soa-service</name>
+	<url>http://maven.apache.org</url>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+	<modules>
+		<module>study-example-soa-service-common</module>
+		<module>study-example-soa-service-sms</module>
+		<module>study-example-soa-service-sms-impl</module>
+		<module>study-example-soa-service-information</module>
+		<module>study-example-soa-service-information-impl</module>
+		<module>study-example-soa-service-msg</module>
+		<module>study-example-soa-service-msg-impl</module>
+		<module>study-example-soa-service-doctor</module>
+		<module>study-example-soa-service-doctor-impl</module>
+		<module>study-example-soa-service-patient</module>
+		<module>study-example-soa-service-patient-impl</module>
+		<module>study-example-soa-service-base</module>
+		<module>study-example-soa-service-base-impl</module>
+		<module>study-example-soa-service-manager</module>
+		<module>study-example-soa-service-manager-impl</module>
+		<module>study-example-soa-service-inquiry</module>
+		<module>study-example-soa-service-inquiry-impl</module>
+		<module>study-example-soa-service-pom</module>
+		<module>study-example-soa-service-integral</module>
+		<module>study-example-soa-service-integral-impl</module>
+    <module>study-example-soa-service-activity</module>
+    <module>study-example-soa-service-activity-impl</module>
+  </modules>
+
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+		</dependency>
+
+		<!-- alibaba -->
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>dubbo</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>druid</artifactId>
+		</dependency>
+
+		<!-- baidu disconf 
+		<dependency>
+			<groupId>com.baidu.disconf</groupId>
+			<artifactId>disconf-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.baidu.disconf</groupId>
+			<artifactId>disconf-base</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.baidu.disconf</groupId>
+			<artifactId>disconf-tool</artifactId>
+		</dependency> -->
+		<dependency>
+			<groupId>com.baidu.disconf</groupId>
+			<artifactId>disconf-client</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-simple</artifactId>
+		</dependency>
+
+	</dependencies>
+</project>

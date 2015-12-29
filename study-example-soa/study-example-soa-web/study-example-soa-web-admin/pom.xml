@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.zcgewu</groupId>
+		<artifactId>study-example-soa-web</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+	</parent>
+	<groupId>org.zcgewu</groupId>
+	<artifactId>study-example-soa-web-admin</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+	<packaging>war</packaging>
+	<name>study-example-soa-web-admin</name>
+	<url>http://maven.apache.org</url>
+	<description>运营管理系统web服务</description>
+	
+	<build>
+		<finalName>study-example-soa-web-admin</finalName>
+	</build>
+</project>
