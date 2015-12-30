@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.zcgewu</groupId>
@@ -38,9 +39,9 @@
 		<module>study-example-soa-service-pom</module>
 		<module>study-example-soa-service-integral</module>
 		<module>study-example-soa-service-integral-impl</module>
-    <module>study-example-soa-service-activity</module>
-    <module>study-example-soa-service-activity-impl</module>
-  </modules>
+		<module>study-example-soa-service-activity</module>
+		<module>study-example-soa-service-activity-impl</module>
+	</modules>
 
 	<dependencies>
 		<dependency>
@@ -58,19 +59,10 @@
 			<artifactId>druid</artifactId>
 		</dependency>
 
-		<!-- baidu disconf 
-		<dependency>
-			<groupId>com.baidu.disconf</groupId>
-			<artifactId>disconf-core</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.baidu.disconf</groupId>
-			<artifactId>disconf-base</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.baidu.disconf</groupId>
-			<artifactId>disconf-tool</artifactId>
-		</dependency> -->
+		<!-- baidu disconf <dependency> <groupId>com.baidu.disconf</groupId> <artifactId>disconf-core</artifactId> 
+			</dependency> <dependency> <groupId>com.baidu.disconf</groupId> <artifactId>disconf-base</artifactId> 
+			</dependency> <dependency> <groupId>com.baidu.disconf</groupId> <artifactId>disconf-tool</artifactId> 
+			</dependency> -->
 		<dependency>
 			<groupId>com.baidu.disconf</groupId>
 			<artifactId>disconf-client</artifactId>
@@ -98,4 +90,30 @@
 		</dependency>
 
 	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.mybatis.generator</groupId>
+				<artifactId>mybatis-generator-maven-plugin</artifactId>
+				<version>1.3.0</version>
+				<configuration>
+					<overwrite>true</overwrite>
+					<verbose>true</verbose>
+				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>org.zcgewu</groupId>
+						<artifactId>study-example-common</artifactId>
+						<version>1.0.0-SNAPSHOT</version>
+					</dependency>
+					<dependency>
+						<groupId>mysql</groupId>
+						<artifactId>mysql-connector-java</artifactId>
+						<version>5.1.29</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+		</plugins>
+	</build>
 </project>
