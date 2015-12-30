@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE generatorConfiguration 
+	PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" 
+	"http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration>
+
+	<context id="context1" targetRuntime="MyBatis3">
+
+		<plugin type="org.mybatis.generator.plugins.SerializablePlugin" />
+		<plugin type="org.mybatis.generator.plugins.CaseInsensitiveLikePlugin" />
+		<plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin" />
+		<plugin type="org.zcgewu.study.common.mybatis.plugin.ToStringPlugin" />
+		<plugin type="org.zcgewu.study.common.mybatis.plugin.PaginationPlugin" />
+
+		<!-- 取消注释 -->
+		<commentGenerator>
+			<property name="suppressDate" value="true" />
+			<property name="suppressAllComments" value="true" />
+		</commentGenerator>
+
+		<!-- 配置连接数据信息 -->
+		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
+			connectionURL="jdbc:mysql://192.168.1.18:3306/mimsp_dev?characterEncoding=utf8"
+			userId="root" password="Szyino123">
+		</jdbcConnection>
+
+		<javaTypeResolver>
+			<property name="forceBigDecimals" value="false" />
+		</javaTypeResolver>
+
+		<!-- 生成持久化对象 -->
+		<javaModelGenerator targetPackage="org.zcgewu.study.soa.doctor.po"
+			targetProject="src/main/java" />
+		
+		<!-- 生成sql -->
+		<sqlMapGenerator targetPackage="org.zcgewu.study.soa.doctor.mapper"
+			targetProject="src/main/resources" />
+
+		<!-- 生成接口 -->
+		<javaClientGenerator targetPackage="org.zcgewu.study.soa.doctor.mapper"
+			targetProject="src/main/java" type="XMLMAPPER" />
+
+
+		<!-- *********************数据表映射配置*********************** -->
+
+		<table tableName="tb_app_permission" domainObjectName="AppPermission">
+			<generatedKey column="app_permission_uid" sqlStatement="MySQL"
+				identity="true" type="post" />
+		</table>
+		<table tableName="tb_app_role" domainObjectName="AppRole">
+			<generatedKey column="app_role_uid" sqlStatement="MySQL"
+				identity="true" type="post" />
+		</table>
+
+		<table tableName="tb_doctor" domainObjectName="Doctor">
+			<property name="useActualColumnNames" value="true" />
+			<generatedKey column="DoctorUID" sqlStatement="MySQL"
+				identity="true" type="post" />
+		</table>
+		<table tableName="tb_doctor_app_role" domainObjectName="DoctorAppRole">
+			<generatedKey column="doctor_app_role_uid" sqlStatement="MySQL"
+				identity="true" type="post" />
+		</table>
+
+	</context>
+</generatorConfiguration>  
