@@ -21,9 +21,8 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.zcgewu</groupId>
-			<artifactId>study-example-soa-service-pom</artifactId>
+			<artifactId>study-example-soa-service-common</artifactId>
 			<version>1.0.0-SNAPSHOT</version>
-			<type>pom</type>
 		</dependency>
 		<dependency>
 			<groupId>org.zcgewu</groupId>

@@ -19,9 +19,8 @@
 		</commentGenerator>
 
 		<!-- 配置连接数据信息 -->
-		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
-			connectionURL="jdbc:mysql://192.168.1.18:3306/mimsp_dev?characterEncoding=utf8"
-			userId="root" password="Szyino123">
+		<jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://127.0.0.1:3306/study_example_soa?characterEncoding=utf8"
+			userId="root" password="root">
 		</jdbcConnection>
 
 		<javaTypeResolver>
@@ -29,37 +28,30 @@
 		</javaTypeResolver>
 
 		<!-- 生成持久化对象 -->
-		<javaModelGenerator targetPackage="org.zcgewu.study.soa.doctor.po"
-			targetProject="src/main/java" />
-		
+		<javaModelGenerator targetPackage="org.zcgewu.study.soa.service.doctor.po" targetProject="src/main/java" />
+
 		<!-- 生成sql -->
-		<sqlMapGenerator targetPackage="org.zcgewu.study.soa.doctor.mapper"
-			targetProject="src/main/resources" />
+		<sqlMapGenerator targetPackage="org.zcgewu.study.soa.service.doctor.mapper" targetProject="src/main/resources" />
 
 		<!-- 生成接口 -->
-		<javaClientGenerator targetPackage="org.zcgewu.study.soa.doctor.mapper"
-			targetProject="src/main/java" type="XMLMAPPER" />
+		<javaClientGenerator targetPackage="org.zcgewu.study.soa.service.doctor.mapper" targetProject="src/main/java"
+			type="XMLMAPPER" />
 
 
 		<!-- *********************数据表映射配置*********************** -->
 
-		<table tableName="tb_app_permission" domainObjectName="AppPermission">
-			<generatedKey column="app_permission_uid" sqlStatement="MySQL"
-				identity="true" type="post" />
-		</table>
-		<table tableName="tb_app_role" domainObjectName="AppRole">
-			<generatedKey column="app_role_uid" sqlStatement="MySQL"
-				identity="true" type="post" />
-		</table>
-
 		<table tableName="tb_doctor" domainObjectName="Doctor">
 			<property name="useActualColumnNames" value="true" />
-			<generatedKey column="DoctorUID" sqlStatement="MySQL"
-				identity="true" type="post" />
+			<generatedKey column="DoctorUID" sqlStatement="MySQL" identity="true" type="post" />
 		</table>
 		<table tableName="tb_doctor_app_role" domainObjectName="DoctorAppRole">
-			<generatedKey column="doctor_app_role_uid" sqlStatement="MySQL"
-				identity="true" type="post" />
+			<generatedKey column="doctor_app_role_uid" sqlStatement="MySQL" identity="true" type="post" />
+		</table>
+		<table tableName="tb_app_permission" domainObjectName="AppPermission">
+			<generatedKey column="app_permission_uid" sqlStatement="MySQL" identity="true" type="post" />
+		</table>
+		<table tableName="tb_app_role" domainObjectName="AppRole">
+			<generatedKey column="app_role_uid" sqlStatement="MySQL" identity="true" type="post" />
 		</table>
 
 	</context>
