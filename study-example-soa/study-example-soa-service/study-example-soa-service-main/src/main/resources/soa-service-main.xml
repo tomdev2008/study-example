@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:cache="http://www.springframework.org/schema/cache"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring" xmlns:redis="http://www.springframework.org/schema/redis"
+	xmlns:task="http://www.springframework.org/schema/task" xmlns:tx="http://www.springframework.org/schema/tx" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.1.xsd
+		http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache-4.2.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
+		http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd
+		http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+		http://www.springframework.org/schema/redis http://www.springframework.org/schema/redis/spring-redis-1.0.xsd
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.2.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.1.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.2.xsd">
+
+	<context:component-scan base-package="org.zcgewu.study.soa.service.*" />
+
+	<aop:aspectj-autoproxy proxy-target-class="true" />
+
+	<!-- 使用disconf必须添加以下配置 -->
+	<bean id="disconfMgrBean" class="com.baidu.disconf.client.DisconfMgrBean" destroy-method="destroy">
+		<property name="scanPackage" value="org.zcgewu.study.soa.service.common.disconf" />
+	</bean>
+	<bean id="disconfMgrBean2" class="com.baidu.disconf.client.DisconfMgrBeanSecond" init-method="init" destroy-method="destroy">
+	</bean>
+
+	<!-- 使用托管方式的disconf配置(无代码侵入, 配置更改会自动reload) -->
+	<bean id="configproperties_disconf" class="com.baidu.disconf.client.addons.properties.ReloadablePropertiesFactoryBean">
+		<property name="locations">
+			<list>
+				<value>classpath:jdbc-mysql.properties</value>
+				<value>classpath:redis.properties</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="propertyConfigurer" class="com.baidu.disconf.client.addons.properties.ReloadingPropertyPlaceholderConfigurer">
+		<property name="ignoreResourceNotFound" value="true" />
+		<property name="ignoreUnresolvablePlaceholders" value="true" />
+		<property name="propertiesArray">
+			<list>
+				<ref bean="configproperties_disconf" />
+			</list>
+		</property>
+	</bean>
+
+	<!-- 使用托管方式的disconf配置(无代码侵入, 配置更改不会自动reload) 
+	<bean id="configproperties_no_reloadable_disconf" class="com.baidu.disconf.client.addons.properties.ReloadablePropertiesFactoryBean">
+		<property name="locations">
+			<list>
+				<value>myserver.properties</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="propertyConfigurerForProject1" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="ignoreResourceNotFound" value="true" />
+		<property name="ignoreUnresolvablePlaceholders" value="true" />
+		<property name="propertiesArray">
+			<list>
+				<ref bean="configproperties_no_reloadable_disconf" />
+			</list>
+		</property>
+	</bean> -->
+
+	<!-- mybatis文件配置，扫描所有mapper文件 -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="configLocation" value="classpath:mybatis-config.xml" />
+		<property name="mapperLocations" value="classpath:org.zcgewu.study.soa.service.*.mapper.*.xml" />
+	</bean>
+
+	<!-- spring与mybatis整合配置，扫描所有dao -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="org.zcgewu.study.soa.service.*.mapper" />
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
+	</bean>
+
+	<!-- 事务管理 -->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<!-- 事物模板 -->
+	<bean id="transactionTemplate" class="org.springframework.transaction.support.TransactionTemplate">
+		<property name="transactionManager" ref="transactionManager" />
+		<property name="timeout" value="10" />
+	</bean>
+
+	<aop:config>
+		<aop:pointcut id="serviceMethod" expression="execution(* org.zcgewu.study.soa.service.*.biz.impl.*.*(..))" />
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="serviceMethod" />
+	</aop:config>
+
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="^get*" rollback-for="SQLException" timeout="10" />
+			<tx:method name="^query*" rollback-for="SQLException" timeout="10" />
+			<tx:method name="^find*" rollback-for="SQLException" timeout="10" />
+			<tx:method name="^is*" rollback-for="SQLException" timeout="10" />
+		</tx:attributes>
+	</tx:advice>
+
+	<!-- 使用zookeeper注册中心暴露服务地址 -->
+	<dubbo:registry address="zookeeper://127.0.0.1:2181" />
+
+	<!-- 用dubbo协议在20880端口暴露服务 -->
+	<dubbo:protocol name="dubbo" port="20880" />
+
+	<import resource="classpath*:dubbo-*-provider.xml" />
+
+</beans>
